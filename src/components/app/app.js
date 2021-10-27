@@ -53,12 +53,12 @@ export default class App extends Component {
         })
     }
 
-    onToggleImportant(id) {
+    onToggle(property, id) {
         this.setState(({data}) => {
             const index = data.findIndex(elem => elem.id === id);
 
             const oldInd = data[index];
-            const newLike = {...oldInd, important: !oldInd.important};
+            const newLike = {...oldInd, [property]: !oldInd[property]};
 
             const newArr = [...data.slice(0, index), newLike, ...data.slice(index + 1)];
 
@@ -68,19 +68,12 @@ export default class App extends Component {
         });
     }
 
+    onToggleImportant(id) {
+        this.onToggle('important', id);
+    }
+
     onToggleLiked(id) {
-        this.setState(({data}) => {
-            const index = data.findIndex(elem => elem.id === id);
-
-            const oldInd = data[index];
-            const newLike = {...oldInd, like: !oldInd.like};
-
-            const newArr = [...data.slice(0, index), newLike, ...data.slice(index + 1)];
-
-            return {
-                data: newArr
-            }
-        });
+        this.onToggle('like', id);
     }
 
     render() {
